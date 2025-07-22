@@ -1,7 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
-using System.Collections;
 
 public class Card : MonoBehaviour
 {
@@ -16,10 +15,13 @@ public class Card : MonoBehaviour
     public bool isSelected;
 
     public CardControlller controller;
+
+    [SerializeField] private AudioClip flipCardClip;
     
 
     public void OnCardClick()
     {
+        SoundFXManager.instance.PlaySoundFXClip(flipCardClip, transform, 1f);
         controller.SetSelected(this); // card'ı parametre olarak ver.
     }
 

@@ -3,7 +3,7 @@ using UnityEngine.SceneManagement;
 using DG.Tweening;
 
 public class MenuButtons : MonoBehaviour
-{ 
+{
     [Header("Duration")]
     [SerializeField] float duration = 1f;
 
@@ -11,6 +11,10 @@ public class MenuButtons : MonoBehaviour
     public RectTransform playButton;
     public RectTransform settingsButton;
     public RectTransform quitButton;
+
+    [Header("Audio Clip")]
+    [Tooltip("Audio Clip plays when pressed the buttons")]
+    [SerializeField] private AudioClip buttonClickClip;
 
     void Start()
     {
@@ -21,11 +25,16 @@ public class MenuButtons : MonoBehaviour
     public void OnPlayClick()
     {
         SceneManager.LoadScene("GameScene");
+        SoundFXManager.instance.PlaySoundFXClip(buttonClickClip, transform, 1f);
     }
 
     public void OnQuitClick()
     {
+        SoundFXManager.instance.PlaySoundFXClip(buttonClickClip, transform, 1f);
         Application.Quit();
     }
-
+    public void OnSettingsClick()
+    {
+        SoundFXManager.instance.PlaySoundFXClip(buttonClickClip, transform, 1f);
+    }
 }

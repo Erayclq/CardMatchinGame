@@ -224,5 +224,7 @@ MonoBehaviour:
   iconImage: {fileID: 4942729035845316919}
   hiddenSpriteImage: {fileID: 434309028, guid: 2d1cff008b8990244a0b574203e43d42, type: 3}
   iconSprite: {fileID: 0}
+  delay: 0.2
   isSelected: 0
   controller: {fileID: 0}
+  flipCardClip: {fileID: 8300000, guid: 8b33509abd95c5a4892b8ab023b3d521, type: 3}
