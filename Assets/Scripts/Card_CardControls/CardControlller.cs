@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using DG.Tweening;
 public class CardControlller : MonoBehaviour
 {
@@ -9,6 +8,7 @@ public class CardControlller : MonoBehaviour
     [SerializeField] Transform gridTransform;
     [SerializeField] Sprite[] Sprites;
     private List<Sprite> spritePairs;
+    private Stack<Card> returnCardStack;
 
     [SerializeField] GameObject gameOverPanel;
 
@@ -21,9 +21,12 @@ public class CardControlller : MonoBehaviour
     [Tooltip("İki pair basariyla eslestirilrse calan Audio Clip.")]
     [SerializeField] private AudioClip succesfullySelected;
 
+    [SerializeField] private Timer countdownTimer;
+
 
     void Start()
     {
+        returnCardStack = new Stack<Card>();
         PrepareSprites();
         CreateCards();
     }
@@ -90,22 +93,28 @@ public class CardControlller : MonoBehaviour
         if (a.iconSprite == b.iconSprite) // Eğer eşleşme varsa gizle.
         {
             SoundFXManager.instance.PlaySoundFXClip(succesfullySelected, transform, 1f); // Eşleşme varsa succesfull audio clip calar.
-            matchCount++;
+
+            matchCount++; // eğer iki sprite aynı ise matchcountu arttır.
             if (matchCount == spritePairs.Count / 2) // hepsi eşleştiyse
             {
                 gameOverPanel.SetActive(true); // game over paneli aktif eder eğer bütün pairlar eşleştiyse.
                                                // Ses animasyonu da eklenecek
+                countdownTimer.StopTimer();
             }
+
+            returnCardStack.Push(a);
+            returnCardStack.Push(b);
+
             a.transform.DOScale(Vector3.zero, 0.2f).OnComplete(() =>
             {
                 a.gameObject.SetActive(false);
             });
-            
+
             b.transform.DOScale(Vector3.zero, 0.2f).OnComplete(() =>
             {
                 b.gameObject.SetActive(false);
             });
-            
+
             /*a.GetComponent<Image>().enabled = false;
             a.GetComponent<Card>().iconSprite = null;
             a.GetComponent<Button>().enabled = false;
@@ -113,11 +122,28 @@ public class CardControlller : MonoBehaviour
             b.GetComponent<Card>().iconSprite = null;
             b.GetComponent<Button>().enabled = false;*/
         }
-        else // eğer eşleşmiyorlarsa geri döndür.
+        else // eğer eşleşmiyorlarsa geri döndür tersini.
         {
             a.Hide();
             b.Hide();
         }
+    }
+
+    public void OnReturnClick()
+    {
+        Card a = returnCardStack.Pop();
+        Card b = returnCardStack.Pop();
+
+        a.gameObject.SetActive(true);
+        b.gameObject.SetActive(true);
+
+        a.Hide(); // Ters Döndürmek için.
+        b.Hide();
+
+        a.transform.DOScale(Vector3.one, 0.2f);
+        b.transform.DOScale(Vector3.one, 0.2f);
+
+        matchCount--;
     }
 
 }
