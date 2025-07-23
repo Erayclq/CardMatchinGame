@@ -22,6 +22,7 @@ public class MenuButtons : MonoBehaviour
         settingsButton.DOScale(Vector3.zero, duration).From();
         quitButton.DOScale(Vector3.zero, duration).From();
     }
+
     public void OnPlayClick()
     {
         SceneManager.LoadScene("GameScene");
@@ -37,4 +38,5 @@ public class MenuButtons : MonoBehaviour
     {
         SoundFXManager.instance.PlaySoundFXClip(buttonClickClip, transform, 1f);
     }
+
 }

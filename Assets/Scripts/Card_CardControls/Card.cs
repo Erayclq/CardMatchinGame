@@ -17,7 +17,6 @@ public class Card : MonoBehaviour
 
     [SerializeField] private AudioClip flipCardClip;
 
-
     public void OnCardClick()
     {
         SoundFXManager.instance.PlaySoundFXClip(flipCardClip, transform, 1f);
@@ -42,8 +41,8 @@ public class Card : MonoBehaviour
         transform.DORotate(new Vector3(0, 0, 0), delay).OnComplete(() =>
         {
             iconImage.sprite = hiddenSpriteImage;
-        }); ;
+        });
         isSelected = false;
     }
-    
+
 }

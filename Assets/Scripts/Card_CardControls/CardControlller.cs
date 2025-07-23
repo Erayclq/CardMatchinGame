@@ -23,7 +23,6 @@ public class CardControlller : MonoBehaviour
 
     [SerializeField] private Timer countdownTimer;
 
-
     void Start()
     {
         returnCardStack = new Stack<Card>();
@@ -86,6 +85,7 @@ public class CardControlller : MonoBehaviour
             }
         }
     }
+
     IEnumerator CheckMatch(Card a, Card b)
     {
         yield return new WaitForSeconds(0.5f);

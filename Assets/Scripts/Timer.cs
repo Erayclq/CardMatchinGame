@@ -9,10 +9,11 @@ public class Timer : MonoBehaviour
     [Header("Timer Text")]
     public TextMeshProUGUI timerText;
 
+    [Tooltip("Süre Bittiğinde ekrana gelecek.")]
+    [SerializeField] GameObject gameOverPanel;
+
     private float remainingTime;
     private bool isRunning;
-
-    [SerializeField] GameObject gameOverPanel;
 
     void Start()
     {
@@ -36,12 +37,12 @@ public class Timer : MonoBehaviour
         UpdateTimerText();
     }
 
-
-    private void UpdateTimerText()
+    private void UpdateTimerText() // sürenin ekrandaki azalmasını kontrol eder.
     {
         int second = Mathf.CeilToInt(remainingTime);// ceilinge yuvarlayıp int saniyeye çevir.
         timerText.text = second.ToString(); // ekrana yaz.
     }
+    
     private void OnTimerFinished() // Timer Bittiğinde yapılacaklar.
     {
         gameOverPanel.SetActive(true);
