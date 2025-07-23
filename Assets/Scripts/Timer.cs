@@ -1,5 +1,5 @@
-using TMPro;
 using UnityEngine;
+using TMPro;
 
 public class Timer : MonoBehaviour
 {
@@ -42,7 +42,7 @@ public class Timer : MonoBehaviour
         int second = Mathf.CeilToInt(remainingTime);// ceilinge yuvarlayıp int saniyeye çevir.
         timerText.text = second.ToString(); // ekrana yaz.
     }
-    
+
     private void OnTimerFinished() // Timer Bittiğinde yapılacaklar.
     {
         gameOverPanel.SetActive(true);

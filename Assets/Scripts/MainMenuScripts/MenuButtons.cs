@@ -25,8 +25,8 @@ public class MenuButtons : MonoBehaviour
 
     public void OnPlayClick()
     {
-        SceneManager.LoadScene("GameScene");
         SoundFXManager.instance.PlaySoundFXClip(buttonClickClip, transform, 1f);
+        SceneManager.LoadScene("GameScene");
     }
 
     public void OnQuitClick()
