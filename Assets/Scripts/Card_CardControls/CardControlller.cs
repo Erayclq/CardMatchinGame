@@ -3,30 +3,34 @@ using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
+
 public class CardControlller : MonoBehaviour
 {
     [SerializeField] Card cardPrefab;
     [SerializeField] Transform gridTransform;
     [SerializeField] Sprite[] Sprites;
     private List<Sprite> spritePairs;
-    private Stack<Card> returnCardStack;
-
+    //--------------------------------------------------------------------------------------------------------------------------
     [SerializeField] GameObject gameOverPanel;
-
+    //--------------------------------------------------------------------------------------------------------------------------
     float matchCount = 0;
-
+    //--------------------------------------------------------------------------------------------------------------------------
     Card firstSelected;
     Card secondSelected;
-
+    //--------------------------------------------------------------------------------------------------------------------------
     [Header("Audio Clips")]
     [Tooltip("İki pair basariyla eslestirilrse calan Audio Clip.")]
     [SerializeField] private AudioClip succesfullySelected;
-
+    [Tooltip("Bütün pairlar eşleştirildiğinde çalan audio clip.")]
+    [SerializeField] private AudioClip GameFinisher;
+    //--------------------------------------------------------------------------------------------------------------------------
     [SerializeField] private Timer countdownTimer;
-
+    //--------------------------------------------------------------------------------------------------------------------------
+    [SerializeField] private ParticleSystem dispParticle;
+    private ParticleSystem dispParticleInstance;
+    //--------------------------------------------------------------------------------------------------------------------------
     void Start()
     {
-        returnCardStack = new Stack<Card>();
         CreateCards();
     }
 
@@ -58,20 +62,20 @@ public class CardControlller : MonoBehaviour
         int totalCards = GameData.rows * GameData.columns;
         spritePairs = new List<Sprite>();
 
-        for (int i = 0; i < totalCards / 2; i++)
+        for (int i = 0; i < totalCards / 2; i++) // Gerekli çift sayısı kadar sprite'ı ekle (her birinden 2 adet)
         {
-            Sprite sprite = Sprites[i % Sprites.Length]; // fazla sprite yoksa döngüye al
+            Sprite sprite = Sprites[i % Sprites.Length]; // Sprite sayısı yetmezse döngüye alınır
             spritePairs.Add(sprite);
             spritePairs.Add(sprite);
         }
 
         ShuffleSprites(spritePairs);
 
-        for (int i = 0; i < spritePairs.Count; i++)
+        for (int i = 0; i < spritePairs.Count; i++)  // Her sprite çifti için bir kart nesnesi oluştur
         {
-            Card card = Instantiate(cardPrefab, gridTransform);
-            card.SetIconSprite(spritePairs[i]);
-            card.controller = this;
+            Card card = Instantiate(cardPrefab, gridTransform); // Kart prefabını grid içine instantiate et
+            card.SetIconSprite(spritePairs[i]); // Kartın görselini ayarla
+            card.controller = this; // Controller referansını kart ile ilişkilendir
         }
     }
 
@@ -103,16 +107,17 @@ public class CardControlller : MonoBehaviour
         {
             SoundFXManager.instance.PlaySoundFXClip(succesfullySelected, transform, 1f); // Eşleşme varsa succesfull audio clip calar.
 
+            SpawnDispParticle(a); // Particle Spawn eder...
+            SpawnDispParticle(b);
+
             matchCount++; // eğer iki sprite aynı ise matchcountu arttır.
             if (matchCount == spritePairs.Count / 2) // hepsi eşleştiyse
             {
+                SoundFXManager.instance.PlaySoundFXClip(GameFinisher, transform, 1f);
                 gameOverPanel.SetActive(true); // game over paneli aktif eder eğer bütün pairlar eşleştiyse.
                                                // Ses animasyonu da eklenecek
                 countdownTimer.StopTimer();
             }
-
-            returnCardStack.Push(a);
-            returnCardStack.Push(b);
 
             a.transform.DOScale(Vector3.zero, 0.2f).OnComplete(() =>
             {
@@ -131,21 +136,13 @@ public class CardControlller : MonoBehaviour
         }
     }
 
-    public void OnReturnClick()
+    private void SpawnDispParticle(Card a)
     {
-        Card a = returnCardStack.Pop();
-        Card b = returnCardStack.Pop();
+        Vector3 cardPos = a.transform.position; // Kartın pozisyonunu al
 
-        a.MakeVisible();
-        b.MakeVisible();
+        Vector3 spawnPos = cardPos + new Vector3(0f, 0f, -5f);  // Dünya Z ekseninde 5 birim ilerisini hesapla
 
-        a.Hide(); // Ters Döndürmek için.
-        b.Hide();
-
-        a.transform.DOScale(Vector3.one, 0.2f);
-        b.transform.DOScale(Vector3.one, 0.2f);
-
-        matchCount--;
+        dispParticleInstance = Instantiate(dispParticle, spawnPos, Quaternion.identity);
     }
 
 }

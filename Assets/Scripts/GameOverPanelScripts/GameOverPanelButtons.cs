@@ -7,11 +7,10 @@ public class GameOverPanelButtons : MonoBehaviour
     [Header("Scoreboard")]
     [SerializeField] private RectTransform Timer;
     [SerializeField] private GameObject Clock;
-    [SerializeField] private GameObject returnButton;
-
+    [SerializeField] private GameObject PauseButton;
     void Start()
     {
-        returnButton.gameObject.SetActive(false);
+        PauseButton.gameObject.SetActive(false);
         Clock.gameObject.SetActive(false);
         Timer.DOAnchorPos(new Vector2(81,-530), 1f); // Timer'ı yourscore'a getiren komut.
     }

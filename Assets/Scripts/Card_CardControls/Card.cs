@@ -47,9 +47,9 @@ public class Card : MonoBehaviour
 
     public void MakeInvisible()
     {
-        GetComponent<CanvasGroup>().alpha = 0f;         // Görünmez yap
-        GetComponent<CanvasGroup>().interactable = false; // Tıklanamaz yap
-        GetComponent<CanvasGroup>().blocksRaycasts = false;
+        GetComponent<CanvasGroup>().alpha = 0f;         // Görünmez yap ama sahnede var olmaya devam eder.
+        GetComponent<CanvasGroup>().interactable = false; // Tıklanamaz yap 
+        GetComponent<CanvasGroup>().blocksRaycasts = false; // arkasındaki UI objesini etkileşime girilebilir yapar 
     }
 
     public void MakeVisible()

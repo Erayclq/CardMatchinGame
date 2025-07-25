@@ -440,7 +440,7 @@ MonoBehaviour:
   hardButton: {fileID: 593326843}
   mediumButton: {fileID: 1924617435}
   eEasyButton: {fileID: 2119408601}
-  duration: 1
+  audioClip: {fileID: 8300000, guid: 380bec18c46d7c74a997d7a56ac4e211, type: 3}
 --- !u!114 &457107912
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1590,7 +1590,6 @@ MonoBehaviour:
   settingsButton: {fileID: 465362054}
   quitButton: {fileID: 570418176}
   buttonClickClip: {fileID: 8300000, guid: 380bec18c46d7c74a997d7a56ac4e211, type: 3}
-  DifficultyPanel: {fileID: 0}
 --- !u!114 &1594348351
 MonoBehaviour:
   m_ObjectHideFlags: 0
