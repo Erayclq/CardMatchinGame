@@ -1,6 +1,7 @@
+using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 using DG.Tweening;
 public class CardControlller : MonoBehaviour
 {
@@ -26,19 +27,7 @@ public class CardControlller : MonoBehaviour
     void Start()
     {
         returnCardStack = new Stack<Card>();
-        PrepareSprites();
         CreateCards();
-    }
-
-    public void PrepareSprites()
-    {
-        spritePairs = new List<Sprite>();
-        for (int i = 0; i < Sprites.Length; i++)
-        {
-            spritePairs.Add(Sprites[i]);  // Her biri çift olarak bulunması gerektiği
-            spritePairs.Add(Sprites[i]);  // için iki kere eklendi.
-        }
-        ShuffleSprites(spritePairs);
     }
 
     /// Fisher–Yates algoritmasıyla listeyi rastgele karıştırır.
@@ -58,11 +47,31 @@ public class CardControlller : MonoBehaviour
 
     public void CreateCards()
     {
+        // Grid Layout ayarı
+        GridLayoutGroup grid = gridTransform.GetComponent<GridLayoutGroup>();
+        if (grid != null)
+        {
+            grid.constraint = GridLayoutGroup.Constraint.FixedColumnCount;
+            grid.constraintCount = GameData.columns;
+        }
+
+        int totalCards = GameData.rows * GameData.columns;
+        spritePairs = new List<Sprite>();
+
+        for (int i = 0; i < totalCards / 2; i++)
+        {
+            Sprite sprite = Sprites[i % Sprites.Length]; // fazla sprite yoksa döngüye al
+            spritePairs.Add(sprite);
+            spritePairs.Add(sprite);
+        }
+
+        ShuffleSprites(spritePairs);
+
         for (int i = 0; i < spritePairs.Count; i++)
         {
             Card card = Instantiate(cardPrefab, gridTransform);
             card.SetIconSprite(spritePairs[i]);
-            card.controller = this; // referans 
+            card.controller = this;
         }
     }
 
@@ -107,20 +116,13 @@ public class CardControlller : MonoBehaviour
 
             a.transform.DOScale(Vector3.zero, 0.2f).OnComplete(() =>
             {
-                a.gameObject.SetActive(false);
+                a.MakeInvisible();
             });
 
             b.transform.DOScale(Vector3.zero, 0.2f).OnComplete(() =>
             {
-                b.gameObject.SetActive(false);
+                b.MakeInvisible();
             });
-
-            /*a.GetComponent<Image>().enabled = false;
-            a.GetComponent<Card>().iconSprite = null;
-            a.GetComponent<Button>().enabled = false;
-            b.GetComponent<Image>().enabled = false;
-            b.GetComponent<Card>().iconSprite = null;
-            b.GetComponent<Button>().enabled = false;*/
         }
         else // eğer eşleşmiyorlarsa geri döndür tersini.
         {
@@ -134,8 +136,8 @@ public class CardControlller : MonoBehaviour
         Card a = returnCardStack.Pop();
         Card b = returnCardStack.Pop();
 
-        a.gameObject.SetActive(true);
-        b.gameObject.SetActive(true);
+        a.MakeVisible();
+        b.MakeVisible();
 
         a.Hide(); // Ters Döndürmek için.
         b.Hide();

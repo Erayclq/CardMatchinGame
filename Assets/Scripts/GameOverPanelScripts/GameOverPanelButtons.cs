@@ -13,7 +13,7 @@ public class GameOverPanelButtons : MonoBehaviour
     {
         returnButton.gameObject.SetActive(false);
         Clock.gameObject.SetActive(false);
-        Timer.DOAnchorPos(new Vector2(81, 0), 1f); // Timer'ı yourscore'a getiren komut.
+        Timer.DOAnchorPos(new Vector2(81,-530), 1f); // Timer'ı yourscore'a getiren komut.
     }
     public void OnRetryClick()
     {

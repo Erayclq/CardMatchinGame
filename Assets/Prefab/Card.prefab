@@ -88,6 +88,7 @@ GameObject:
   - component: {fileID: 3983338893355933839}
   - component: {fileID: -226909318616485968}
   - component: {fileID: -227919885946502741}
+  - component: {fileID: 5556017732914963333}
   m_Layer: 5
   m_Name: Card
   m_TagString: Untagged
@@ -228,3 +229,15 @@ MonoBehaviour:
   isSelected: 0
   controller: {fileID: 0}
   flipCardClip: {fileID: 8300000, guid: 8b33509abd95c5a4892b8ab023b3d521, type: 3}
+--- !u!225 &5556017732914963333
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7583631937892017669}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0

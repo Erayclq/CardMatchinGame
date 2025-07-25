@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using DG.Tweening;
 
 public class MenuButtons : MonoBehaviour
@@ -26,7 +25,6 @@ public class MenuButtons : MonoBehaviour
     public void OnPlayClick()
     {
         SoundFXManager.instance.PlaySoundFXClip(buttonClickClip, transform, 1f);
-        SceneManager.LoadScene("GameScene");
     }
 
     public void OnQuitClick()
@@ -38,5 +36,4 @@ public class MenuButtons : MonoBehaviour
     {
         SoundFXManager.instance.PlaySoundFXClip(buttonClickClip, transform, 1f);
     }
-
 }

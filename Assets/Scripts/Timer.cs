@@ -3,9 +3,6 @@ using TMPro;
 
 public class Timer : MonoBehaviour
 {
-    [Header("Timer Kactan Baslayacak")]
-    [SerializeField] float startTimer = 60;
-
     [Header("Timer Text")]
     public TextMeshProUGUI timerText;
 
@@ -17,7 +14,7 @@ public class Timer : MonoBehaviour
 
     void Start()
     {
-        remainingTime = startTimer; // Sayacı Başlat
+        remainingTime = GameData.selectedSecond; // Sayacı Başlat
         isRunning = true;
         UpdateTimerText();
     }
@@ -51,5 +48,9 @@ public class Timer : MonoBehaviour
     public void StopTimer() // Oyun sayaç bitişinden önce biterse bu method CardControllerdan çağırılacak.
     {
         isRunning = false;
+    }
+    public void ResumeTimer()
+    {
+        isRunning = true;
     }
 }

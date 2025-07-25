@@ -45,4 +45,17 @@ public class Card : MonoBehaviour
         isSelected = false;
     }
 
+    public void MakeInvisible()
+    {
+        GetComponent<CanvasGroup>().alpha = 0f;         // Görünmez yap
+        GetComponent<CanvasGroup>().interactable = false; // Tıklanamaz yap
+        GetComponent<CanvasGroup>().blocksRaycasts = false;
+    }
+
+    public void MakeVisible()
+    {
+        GetComponent<CanvasGroup>().alpha = 0f;         // Görünmez yap
+        GetComponent<CanvasGroup>().interactable = false; // Tıklanamaz yap
+        GetComponent<CanvasGroup>().blocksRaycasts = false;
+    }
 }
